@@ -1,0 +1,11 @@
+#pragma once
+#include "CLurkerAttack.h"
+#include "CLurkerBackMove.h"
+#include "CLurkerBackStep.h"
+#include "CLurkerDeath.h"
+#include "CLurkerFrontMove.h"
+#include "CLurkerIdle.h"
+#include "CLurkerLeftMove.h"
+#include "CLurkerNotify.h"
+#include "CLurkerRightMove.h"
+#include "CLurkerTrace.h"

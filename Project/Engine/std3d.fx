@@ -1,0 +1,145 @@
+#ifndef _STD3D
+#define _STD3D
+
+#include "value.fx"
+#include "struct.fx"
+#include "func.fx"
+
+// 빛 설정을 이제 Light3D에서 하므로 필요없음
+
+// Light3DInfo
+// 빛의 방향은 우하향 방향
+//static float3 g_LightDir = float3(1.f, -1.f, 0.f);
+//static float4 g_LightColor = float4(1.f, 1., 1.f, 1.f);
+// 빛이 닿지 않는 부분도 최소한의 광원을 주기 위한 환경광
+//static float4 g_LightAmb = float4(0.15f, 0.15f, 0.15f, 1.f);
+
+// ========================
+// Std3D Shader
+//
+// g_tex_0 : Color Texture
+// g_tex_1 : Normal Texture
+// ========================
+
+
+struct VS_IN
+{
+    float3 vPos : POSITION;
+    float2 vUV : TEXCOORD;
+   
+    float3 vTangent : TANGENT;
+    float3 vNormal : NORMAL; 
+    float3 vBinormal : BINORMAL;
+};
+
+struct VS_OUT
+{
+    float4 vPosition : SV_Position;
+    float2 vUV : TEXCOORD;
+    // 정점 단위 라이팅을 위한 빛의 세기
+    //float fLightPow : FOG;
+    
+    
+    // 픽셀 단위 라이팅을 위한 ViewPos 및 ViewNormal
+    float3 vViewPos : POSITION;
+    
+    float3 vViewTangent : TANGENT;
+    float3 vViewNormal : NORMAL;    
+    float3 vViewBinormal : BINORMAL;
+};
+
+VS_OUT VS_Std3D(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;    
+    
+    //==============================================
+    // 빛을 월드 기준으로 쉐이더 내에서 강제 설정했을 때 
+    // 정점 기준 라이팅 사용X
+    //==============================================
+    
+    //// 정점 단위 라이팅을 위한 빛의 세기 계산
+    //// 램버트 코사인법칙
+    //float3 vWorldNormal = normalize(mul(float4(_in.vNormal, 0.f), g_matWorld));
+    //float3 vViewNormal = normalize(mul(float4(_in.vNormal, 0.f), g_matWV));
+    //
+    //// 빛이 오는 방향이 아닌 물체에서 빛을 향하는 방향과 노말벡터로 빛의 세기를 계산할 수 있음.
+    //float3 vLightDir = -normalize(g_LightDir);    
+    //// saturate로 빛의 세기가 음수로 내려가는 것 방지
+    //float  fLightPow = saturate(dot(vWorldNormal, vLightDir));
+        
+    //output.fLightPow = fLightPow;  
+          
+    // 투영스페이스 기준 좌표
+    output.vPosition = mul(float4(_in.vPos, 1.f), g_matWVP);          
+    output.vUV = _in.vUV;
+    
+
+    // 픽셀 라이팅을 위한 View스페이스 기준 pos, Normal벡터 계산
+    output.vViewPos = mul(float4(_in.vPos, 1.f), g_matWV);
+        
+    // 월드에 있는 모든 Obj가 같은 위치의 빛을 받아야 하므로 이동값을 반영하지 않음.
+    // Obj의 표면상의 벡터를 View Space 기준으로 변경함.
+    output.vViewTangent = normalize(mul(float4(_in.vTangent, 0.f), g_matWV));
+    output.vViewNormal = normalize(mul(float4(_in.vNormal, 0.f), g_matWV));
+    output.vViewBinormal = normalize(mul(float4(_in.vBinormal, 0.f), g_matWV));    
+    
+    return output;
+}
+
+// Rasterizer로 정점 사이 픽셀 호출
+
+float4 PS_Std3D(VS_OUT _in) : SV_Target
+{        
+    // obj 색상 설정(회색)
+    float4 vObjectColor = float4(0.4f, 0.4f, 0.4f, 1.f);    
+    float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
+    
+    float3 vViewNormal = _in.vViewNormal;
+     
+    // 텍스쳐가 있으면, 해당 색상을 사용한다.
+    if(g_btex_0)
+    {
+        vObjectColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    }
+       
+    // NomalMap 이 있다면
+    if(g_btex_1)
+    {
+        // 노말텍스쳐에 있는 방향벡터들은 좌표계 기준으로 x, y, z축임
+        // 이를 투영좌표계로 가져오기 위해서는 해당 픽셀의 기준으로 옮겨와야 함.
+        // 옮겨오기 위해서는 해당 방향벡터들을 표면벡터에 맞게 회전행렬을 곱해줘야 하는데
+        // 방향벡터들을 순서를 조합하면 단위행렬로 만들 수 있고 단위행렬은 곱하면 곱한 행렬 그대로가 되기 때문에
+        // 기존 obj 픽셀에 있던 방향벡터가 곧 회전행렬이 된다. 따라서 조합한 순서에 따라 행렬을 만든 후 곱해줌.
+        float3x3 matRot =
+        {
+            // 현재 사용 중인 리소스가 OpenGL에서 사용되는 리소스임
+            // OpenGL은 DirextX와 바이노말의 방향이 반대이므로 바이노말을 뒤집어줌.
+            _in.vViewTangent,          
+            -_in.vViewBinormal,
+            _in.vViewNormal,
+        };
+
+        float3 vNormal = g_tex_1.Sample(g_sam_0, _in.vUV);        
+        // 로컬좌표 기준에 있는 정점 위치를 투영좌표계 기준으로 옮겨줌.
+        vNormal = normalize((vNormal * 2.f) - 1.f);
+        vViewNormal = mul(vNormal, matRot);       
+    }    
+    
+    tLightColor LightColor = (tLightColor) 0.f;
+    
+    for (int i = 0; i < g_Light3DCount; ++i)
+    {
+        CalcLight3D(_in.vViewPos, vViewNormal, i, LightColor);
+    }
+        
+    // 광원 적용
+    vOutColor.xyz = vObjectColor.xyz * LightColor.vDiffuse.xyz
+                    + LightColor.vSpecular.xyz
+                    + vObjectColor.xyz * LightColor.vAmbient.xyz;
+    
+    return vOutColor;
+}
+
+
+
+#endif

@@ -1,0 +1,131 @@
+#ifndef _TESS
+#define _TESS
+
+#include "value.fx"
+
+// ========================
+// TessShader
+// g_tex_0 : Color Texture
+// ========================
+struct VS_INOUT
+{
+    float3 vPos : POSITION;
+    float2 vUV : TEXCOORD;   
+};
+
+// ==============
+// Vertex Shader
+// ==============
+VS_INOUT VS_Tess(VS_INOUT _in)
+{
+    VS_INOUT output = (VS_INOUT) 0.f;
+       
+    output = _in;
+    
+    return output;
+}
+
+
+// ===========
+// Hull Shader
+// ===========
+// Patch Constant Function
+// 패치의 분할 횟수를 지정하는 함수
+struct PatchOutput
+{
+    float Edges[3]  : SV_TessFactor;
+    float Inside    : SV_InsideTessFactor;
+};
+
+PatchOutput PatchConstFunc(InputPatch<VS_INOUT, 3> _input
+                            , uint PatchID : SV_PrimitiveID)
+{
+    PatchOutput output = (PatchOutput) 0.f;
+    
+    output.Edges[0] = g_float_0;
+    output.Edges[1] = g_float_0;
+    output.Edges[2] = g_float_0;    
+    output.Inside = g_float_0;
+    
+    return output;
+}
+
+
+struct HS_OUT
+{
+    float3 vPos : POSITION;
+    float2 vUV : TEXCOORD;
+};
+
+[domain("tri")]// 어떻게 구성될 것인지
+[partitioning("integer")]   // 정수, 실수로 적용 여부
+//[partitioning("fractional_odd")]
+[outputtopology("triangle_cw")] // 현재 메쉬 토폴로지 설정
+[outputcontrolpoints(3)] // 토폴로지 당 정점 개수
+[patchconstantfunc("PatchConstFunc")] // 같이 컴파일 될 패치상수 함수를 적어줘 같이 컴파일되게 함
+[maxtessfactor(32)] // 최대 분할 개수
+HS_OUT HS_Tess(InputPatch<VS_INOUT, 3> _input
+                , uint i : SV_OutputControlPointID
+                , uint PatchID : SV_PrimitiveID)
+{
+    HS_OUT output = (HS_OUT) 0.f;
+    
+    output.vPos = _input[i].vPos;    
+    output.vUV = _input[i].vUV;
+    
+    return output;
+}
+
+
+
+struct DS_OUT
+{
+    float4 vPosition : SV_Position;
+    float2 vUV : TEXCOORD;
+};
+
+// DS는 어떻게 patch가 구성되는 지만 알려주면 된다.
+[domain("tri")]
+DS_OUT DS_Tess(const OutputPatch<HS_OUT, 3> _origin
+                , float3 _vWeight : SV_DomainLocation
+                , PatchOutput _patchtess)
+{
+    DS_OUT output = (DS_OUT) 0.f;        
+    
+    //float3 vLocalPos = (_origin[0].vPos * _vWeight[0]) + (_origin[1].vPos * _vWeight[1]) + (_origin[2].vPos * _vWeight[2]);
+    //float2 vUV = (_origin[0].vUV * _vWeight[0]) + (_origin[1].vUV * _vWeight[1]) + (_origin[2].vUV * _vWeight[2]);
+  
+    float3 vLocalPos = (float3) 0.f;
+    float2 vUV = (float2) 0.f;
+    
+    for (int i = 0; i < 3; ++i)
+    {
+        vLocalPos += _origin[i].vPos * _vWeight[i];
+        vUV += _origin[i].vUV * _vWeight[i];
+    }    
+    
+    output.vPosition = mul(float4(vLocalPos, 1.f), g_matWVP);
+    output.vUV = vUV;
+    
+    return output;
+}
+
+// ============
+// Pixel Shader
+// ============
+float4 PS_Tess(DS_OUT _in) : SV_Target
+{
+    float4 vObjectColor = float4(0.f, 1.f, 0.f, 1.f);
+    float4 vOutColor = float4(0.f, 0.f, 0.f, 1.f);
+   
+    vOutColor.xyz = vObjectColor;    
+    return vOutColor;
+}
+
+
+
+
+
+
+#endif
+

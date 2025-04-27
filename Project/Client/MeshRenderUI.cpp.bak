@@ -1,0 +1,32 @@
+#include "pch.h"
+#include "MeshRenderUI.h"
+
+#include <Engine\CMeshRender.h>
+#include <Engine\CResMgr.h>
+
+#include "ImGuiMgr.h"
+#include "ListUI.h"
+
+#include "TreeUI.h"
+#include "ParamUI.h"
+
+
+
+MeshRenderUI::MeshRenderUI()
+	: ComponentUI("##MeshRender", COMPONENT_TYPE::MESHRENDER)	
+{
+	SetName("MeshRender");
+}
+
+MeshRenderUI::~MeshRenderUI()
+{
+}
+
+
+int MeshRenderUI::render_update()
+{
+	if (FALSE == ComponentUI::render_update())
+		return FALSE;
+
+	return TRUE;
+}

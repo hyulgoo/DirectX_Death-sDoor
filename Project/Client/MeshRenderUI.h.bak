@@ -1,0 +1,16 @@
+#pragma once
+#include "ComponentUI.h"
+
+class MeshRenderUI :
+    public ComponentUI
+{
+private:
+
+public:
+    virtual int render_update() override;
+
+public:
+    MeshRenderUI();
+    ~MeshRenderUI();
+};
+

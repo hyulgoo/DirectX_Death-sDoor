@@ -1,0 +1,538 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{5b1b31d5-6602-4a99-b0e1-3f817ba05ea1}</ProjectGuid>
+    <RootNamespace>Script</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableUnitySupport>true</EnableUnitySupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v143</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <EnableUnitySupport>true</EnableUnitySupport>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LibraryPath>$(SolutionDir)External\Library\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)External\Include\;$(SolutionDir)External\Include\FBXLoader\;$(SolutionDir)External\Include\Detour\;$(SolutionDir)External\Include\PhysX\</IncludePath>
+    <TargetName>$(ProjectName)_d</TargetName>
+    <OutDir>$(SolutionDir)External\Library\Script\</OutDir>
+    <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LibraryPath>$(SolutionDir)External\Library\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)External\Include\;$(SolutionDir)External\Include\FBXLoader\;$(SolutionDir)External\Include\Detour\;$(SolutionDir)External\Include\PhysX\</IncludePath>
+    <OutDir>$(SolutionDir)External\Library\Script\</OutDir>
+    <ExternalIncludePath>$(ExternalIncludePath)</ExternalIncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <MinFilesInUnityFile>10</MinFilesInUnityFile>
+      <MaxFilesInUnityFile>20</MaxFilesInUnityFile>
+      <UnityFilesDirectory>$(ProjectDir)</UnityFilesDirectory>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PreBuildEvent>
+      <Command>cd $(SolutionDir)
+call ScriptCopy.bat
+cd $(SolutionDir)OutputFile\bin_d\
+call CodeGen.exe</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <MinFilesInUnityFile>10</MinFilesInUnityFile>
+      <MaxFilesInUnityFile>20</MaxFilesInUnityFile>
+      <UnityFilesDirectory>$(ProjectDir)</UnityFilesDirectory>
+      <AdditionalIncludeDirectories>
+      </AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>
+      </SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <PreBuildEvent>
+      <Command>cd $(SolutionDir)
+call ScriptCopy.bat
+cd $(SolutionDir)OutputFile\bin_d\
+call CodeGen.exe</Command>
+    </PreBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="BatStates.h" />
+    <ClInclude Include="BazookaStates.h" />
+    <ClInclude Include="CAnchorScript.h" />
+    <ClInclude Include="CArrowIconScript.h" />
+    <ClInclude Include="CAttackSpeed.h" />
+    <ClInclude Include="CBankerFrameScript.h" />
+    <ClInclude Include="CBankNPCScript.h" />
+    <ClInclude Include="CBankUpgradeScript.h" />
+    <ClInclude Include="CBatAttack.h" />
+    <ClInclude Include="CBatDeath.h" />
+    <ClInclude Include="CBatIdle.h" />
+    <ClInclude Include="CBatRecognize.h" />
+    <ClInclude Include="CBatScript.h" />
+    <ClInclude Include="CBazookaAim.h" />
+    <ClInclude Include="CBazookaDeath.h" />
+    <ClInclude Include="CBazookaGasGrenadeScript.h" />
+    <ClInclude Include="CBazookaScript.h" />
+    <ClInclude Include="CBazookaTrace.h" />
+    <ClInclude Include="CBazzokaIdle.h" />
+    <ClInclude Include="CBazzokaLongDistance.h" />
+    <ClInclude Include="CBazzokaMelee.h" />
+    <ClInclude Include="CBazzokaMove.h" />
+    <ClInclude Include="CBombIconScript.h" />
+    <ClInclude Include="CBossChainScript.h" />
+    <ClInclude Include="CBrazierScript.h" />
+    <ClInclude Include="CCameraMoveScript.h" />
+    <ClInclude Include="CCrowBossBatBullet.h" />
+    <ClInclude Include="CCrowBossCutScene.h" />
+    <ClInclude Include="CCrowBossDeath.h" />
+    <ClInclude Include="CCrowBossIdle.h" />
+    <ClInclude Include="CCrowBossJump.h" />
+    <ClInclude Include="CCrowBossRightSpin.h" />
+    <ClInclude Include="CCrowBossRun.h" />
+    <ClInclude Include="CCrowBossScript.h" />
+    <ClInclude Include="CCrowBossSliding.h" />
+    <ClInclude Include="CCrowBossSlidingReady.h" />
+    <ClInclude Include="CCrowBossStandingDeath.h" />
+    <ClInclude Include="CCrowBossStomp.h" />
+    <ClInclude Include="CCrowHeadScript.h" />
+    <ClInclude Include="CFenceScript.h" />
+    <ClInclude Include="CMPIconScript.h" />
+    <ClInclude Include="CEnterScript.h" />
+    <ClInclude Include="CFireIconScript.h" />
+    <ClInclude Include="CGameCameraScript.h" />
+    <ClInclude Include="CGhostHit.h" />
+    <ClInclude Include="CGhostScript.h" />
+    <ClInclude Include="CGrimKnightBackStep.h" />
+    <ClInclude Include="CGrimKnightBackStep2.h" />
+    <ClInclude Include="CGrimKnightDeath.h" />
+    <ClInclude Include="CGrimKnightGuard.h" />
+    <ClInclude Include="CGrimKnightGuardBreak.h" />
+    <ClInclude Include="CGrimKnightGuardStay.h" />
+    <ClInclude Include="CGrimKnightIdle.h" />
+    <ClInclude Include="CGrimKnightLongDistance.h" />
+    <ClInclude Include="CGrimKnightMelee.h" />
+    <ClInclude Include="CGrimKnightScript.h" />
+    <ClInclude Include="CGrimKnightSpinDown.h" />
+    <ClInclude Include="CGrimKnightSpinUp.h" />
+    <ClInclude Include="CGruntBackStep.h" />
+    <ClInclude Include="CGruntDeath.h" />
+    <ClInclude Include="CGruntIdle.h" />
+    <ClInclude Include="CGruntJumpAttack.h" />
+    <ClInclude Include="CGruntJumpAttackReady.h" />
+    <ClInclude Include="CGruntLeftMove.h" />
+    <ClInclude Include="CGruntMove.h" />
+    <ClInclude Include="CGruntNailAttack.h" />
+    <ClInclude Include="CGruntNailAttackReady.h" />
+    <ClInclude Include="CGruntRightMove.h" />
+    <ClInclude Include="CGruntRun.h" />
+    <ClInclude Include="CGruntRun2.h" />
+    <ClInclude Include="CGruntScript.h" />
+    <ClInclude Include="CGruntTrace.h" />
+    <ClInclude Include="CGruntWalk.h" />
+    <ClInclude Include="CHitStoneScript.h" />
+    <ClInclude Include="CHookIconScript.h" />
+    <ClInclude Include="CHPIconScript.h" />
+    <ClInclude Include="CHUDScript.h" />
+    <ClInclude Include="CIconScript.h" />
+    <ClInclude Include="CKnightChopAttack.h" />
+    <ClInclude Include="CKnightChopAttackCombo.h" />
+    <ClInclude Include="CKnightChopAttackComboEnd.h" />
+    <ClInclude Include="CKnightChopAttackEnd.h" />
+    <ClInclude Include="CKnightCutScene.h" />
+    <ClInclude Include="CKnightDeath.h" />
+    <ClInclude Include="CKnightHit.h" />
+    <ClInclude Include="CKnightIdle.h" />
+    <ClInclude Include="CKnightJumpAttack.h" />
+    <ClInclude Include="CKnightJumpAttack2.h" />
+    <ClInclude Include="CKnightJumpFinish.h" />
+    <ClInclude Include="CKnightJumpReady.h" />
+    <ClInclude Include="CKnightRunAttack.h" />
+    <ClInclude Include="CKnightScript.h" />
+    <ClInclude Include="CKnightSpinAttack.h" />
+    <ClInclude Include="CKnightSpinAttackCombo.h" />
+    <ClInclude Include="CKnightWalk.h" />
+    <ClInclude Include="CLadderScript.h" />
+    <ClInclude Include="CLevelChangeDoorScript.h" />
+    <ClInclude Include="CLurkerAttack.h" />
+    <ClInclude Include="CLurkerBackMove.h" />
+    <ClInclude Include="CLurkerBackStep.h" />
+    <ClInclude Include="CLurkerDeath.h" />
+    <ClInclude Include="CLurkerFrontMove.h" />
+    <ClInclude Include="CLurkerIdle.h" />
+    <ClInclude Include="CLurkerLeftMove.h" />
+    <ClInclude Include="CLurkerNotify.h" />
+    <ClInclude Include="CLurkerRightMove.h" />
+    <ClInclude Include="CLurkerScript.h" />
+    <ClInclude Include="CLurkerTrace.h" />
+    <ClInclude Include="CMagic.h" />
+    <ClInclude Include="CMagic_ArrowScript.h" />
+    <ClInclude Include="CMagic_BombScript.h" />
+    <ClInclude Include="CMagic_FireScript.h" />
+    <ClInclude Include="CMagic_HookScript.h" />
+    <ClInclude Include="CMainLightScript.h" />
+    <ClInclude Include="CMoneyCountScript.h" />
+    <ClInclude Include="CMonsterDetectRangeScript.h" />
+    <ClInclude Include="CCursorScript.h" />
+    <ClInclude Include="CPlayerWeaponScript.h" />
+    <ClInclude Include="CLevelSaveLoadInScript.h" />
+    <ClInclude Include="CLoadingThread.h" />
+    <ClInclude Include="CLoadLevelThreadScript.h" />
+    <ClInclude Include="CMonsterScript.h" />
+    <ClInclude Include="CPlayerScript.h" />
+    <ClInclude Include="CPlyAttack.h" />
+    <ClInclude Include="CPlyDance.h" />
+    <ClInclude Include="CPlyDead.h" />
+    <ClInclude Include="CPlyDodge.h" />
+    <ClInclude Include="CPlyFall.h" />
+    <ClInclude Include="CPlyHit.h" />
+    <ClInclude Include="CPlyIdle.h" />
+    <ClInclude Include="CPlyLadder.h" />
+    <ClInclude Include="CPlyMagic_Arrow.h" />
+    <ClInclude Include="CPlyMagic_Bomb.h" />
+    <ClInclude Include="CPlyMagic_Fire.h" />
+    <ClInclude Include="CPlyMagic_Hook.h" />
+    <ClInclude Include="CPlyMagic_Hooking.h" />
+    <ClInclude Include="CPlyRun.h" />
+    <ClInclude Include="CPlyWalk.h" />
+    <ClInclude Include="CPlyWpAttack.h" />
+    <ClInclude Include="CPlyWpDance.h" />
+    <ClInclude Include="CPlyWpDead.h" />
+    <ClInclude Include="CPlyWpDodge.h" />
+    <ClInclude Include="CPlyWpFall.h" />
+    <ClInclude Include="CPlyWpHit.h" />
+    <ClInclude Include="CPlyWpIdle.h" />
+    <ClInclude Include="CPlyWpLadder.h" />
+    <ClInclude Include="CPlyWpMagic_Arrow.h" />
+    <ClInclude Include="CPlyWpMagic_Bomb.h" />
+    <ClInclude Include="CPlyWpMagic_Fire.h" />
+    <ClInclude Include="CPlyWpMagic_Hook.h" />
+    <ClInclude Include="CPlyWpMagic_Hooking.h" />
+    <ClInclude Include="CPlyWpRun.h" />
+    <ClInclude Include="CPlyWpWalk.h" />
+    <ClInclude Include="CPower.h" />
+    <ClInclude Include="CrowBossStates.h" />
+    <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="CSlashScript.h" />
+    <ClInclude Include="CSoundScript.h" />
+    <ClInclude Include="CSpawnDoorScript.h" />
+    <ClInclude Include="CSpawnMgr.h" />
+    <ClInclude Include="CSpeed.h" />
+    <ClInclude Include="CStartSceneUIScript.h" />
+    <ClInclude Include="CState.h" />
+    <ClInclude Include="CStateScript.h" />
+    <ClInclude Include="CTrace.h" />
+    <ClInclude Include="CTrapScript.h" />
+    <ClInclude Include="CUIMgr.h" />
+    <ClInclude Include="CWaterCameraScript.h" />
+    <ClInclude Include="CRoomScript.h" />
+    <ClInclude Include="CWaterScript.h" />
+    <ClInclude Include="framework.h" />
+    <ClInclude Include="GrimKnightStates.h" />
+    <ClInclude Include="GruntStates.h" />
+    <ClInclude Include="KnightStates.h" />
+    <ClInclude Include="LurkerStates.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CAnchorScript.cpp" />
+    <ClCompile Include="CArrowIconScript.cpp" />
+    <ClCompile Include="CAttackSpeed.cpp" />
+    <ClCompile Include="CBankerFrameScript.cpp" />
+    <ClCompile Include="CBankNPCScript.cpp" />
+    <ClCompile Include="CBankUpgradeScript.cpp" />
+    <ClCompile Include="CBatAttack.cpp" />
+    <ClCompile Include="CBatDeath.cpp" />
+    <ClCompile Include="CBatIdle.cpp" />
+    <ClCompile Include="CBatRecognize.cpp" />
+    <ClCompile Include="CBatScript.cpp" />
+    <ClCompile Include="CBazookaAim.cpp" />
+    <ClCompile Include="CBazookaDeath.cpp" />
+    <ClCompile Include="CBazookaGasGrenadeScript.cpp" />
+    <ClCompile Include="CBazookaScript.cpp" />
+    <ClCompile Include="CBazookaTrace.cpp" />
+    <ClCompile Include="CBazzokaIdle.cpp" />
+    <ClCompile Include="CBazzokaLongDistance.cpp" />
+    <ClCompile Include="CBazzokaMelee.cpp" />
+    <ClCompile Include="CBazzokaMove.cpp" />
+    <ClCompile Include="CBombIconScript.cpp" />
+    <ClCompile Include="CBossChainScript.cpp" />
+    <ClCompile Include="CBrazierScript.cpp" />
+    <ClCompile Include="CCameraMoveScript.cpp" />
+    <ClCompile Include="CCrowBossBatBullet.cpp" />
+    <ClCompile Include="CCrowBossCutScene.cpp" />
+    <ClCompile Include="CCrowBossDeath.cpp" />
+    <ClCompile Include="CCrowBossIdle.cpp" />
+    <ClCompile Include="CCrowBossJump.cpp" />
+    <ClCompile Include="CCrowBossRightSpin.cpp" />
+    <ClCompile Include="CCrowBossRun.cpp" />
+    <ClCompile Include="CCrowBossScript.cpp" />
+    <ClCompile Include="CCrowBossSliding.cpp" />
+    <ClCompile Include="CCrowBossSlidingReady.cpp" />
+    <ClCompile Include="CCrowBossStandingDeath.cpp" />
+    <ClCompile Include="CCrowBossStomp.cpp" />
+    <ClCompile Include="CCrowHeadScript.cpp" />
+    <ClCompile Include="CFenceScript.cpp" />
+    <ClCompile Include="CMPIconScript.cpp" />
+    <ClCompile Include="CEnterScript.cpp" />
+    <ClCompile Include="CFireIconScript.cpp" />
+    <ClCompile Include="CGameCameraScript.cpp" />
+    <ClCompile Include="CGhostHit.cpp" />
+    <ClCompile Include="CGhostScript.cpp" />
+    <ClCompile Include="CGrimKnightBackStep.cpp" />
+    <ClCompile Include="CGrimKnightBackStep2.cpp" />
+    <ClCompile Include="CGrimKnightDeath.cpp" />
+    <ClCompile Include="CGrimKnightGuard.cpp" />
+    <ClCompile Include="CGrimKnightGuardBreak.cpp" />
+    <ClCompile Include="CGrimKnightGuardStay.cpp" />
+    <ClCompile Include="CGrimKnightIdle.cpp" />
+    <ClCompile Include="CGrimKnightLongDistance.cpp" />
+    <ClCompile Include="CGrimKnightMelee.cpp" />
+    <ClCompile Include="CGrimKnightScript.cpp" />
+    <ClCompile Include="CGrimKnightSpinDown.cpp" />
+    <ClCompile Include="CGrimKnightSpinUp.cpp" />
+    <ClCompile Include="CGruntBackStep.cpp" />
+    <ClCompile Include="CGruntDeath.cpp" />
+    <ClCompile Include="CGruntIdle.cpp" />
+    <ClCompile Include="CGruntJumpAttack.cpp" />
+    <ClCompile Include="CGruntJumpAttackReady.cpp" />
+    <ClCompile Include="CGruntLeftMove.cpp" />
+    <ClCompile Include="CGruntMove.cpp" />
+    <ClCompile Include="CGruntNailAttack.cpp" />
+    <ClCompile Include="CGruntNailAttackReady.cpp" />
+    <ClCompile Include="CGruntRightMove.cpp" />
+    <ClCompile Include="CGruntRun.cpp" />
+    <ClCompile Include="CGruntRun2.cpp" />
+    <ClCompile Include="CGruntScript.cpp" />
+    <ClCompile Include="CGruntTrace.cpp" />
+    <ClCompile Include="CGruntWalk.cpp" />
+    <ClCompile Include="CHitStoneScript.cpp" />
+    <ClCompile Include="CHookIconScript.cpp" />
+    <ClCompile Include="CHPIconScript.cpp" />
+    <ClCompile Include="CHUDScript.cpp" />
+    <ClCompile Include="CIconScript.cpp" />
+    <ClCompile Include="CKnightChopAttack.cpp" />
+    <ClCompile Include="CKnightChopAttackCombo.cpp" />
+    <ClCompile Include="CKnightChopAttackComboEnd.cpp" />
+    <ClCompile Include="CKnightChopAttackEnd.cpp" />
+    <ClCompile Include="CKnightCutScene.cpp" />
+    <ClCompile Include="CKnightDeath.cpp" />
+    <ClCompile Include="CKnightHit.cpp" />
+    <ClCompile Include="CKnightIdle.cpp" />
+    <ClCompile Include="CKnightJumpAttack.cpp" />
+    <ClCompile Include="CKnightJumpAttack2.cpp" />
+    <ClCompile Include="CKnightJumpFinish.cpp" />
+    <ClCompile Include="CKnightJumpReady.cpp" />
+    <ClCompile Include="CKnightRunAttack.cpp" />
+    <ClCompile Include="CKnightScript.cpp" />
+    <ClCompile Include="CKnightSpinAttack.cpp" />
+    <ClCompile Include="CKnightSpinAttackCombo.cpp" />
+    <ClCompile Include="CKnightWalk.cpp" />
+    <ClCompile Include="CLadderScript.cpp" />
+    <ClCompile Include="CLevelChangeDoorScript.cpp" />
+    <ClCompile Include="CLurkerAttack.cpp" />
+    <ClCompile Include="CLurkerBackMove.cpp" />
+    <ClCompile Include="CLurkerBackStep.cpp" />
+    <ClCompile Include="CLurkerDeath.cpp" />
+    <ClCompile Include="CLurkerFrontMove.cpp" />
+    <ClCompile Include="CLurkerIdle.cpp" />
+    <ClCompile Include="CLurkerLeftMove.cpp" />
+    <ClCompile Include="CLurkerNotify.cpp" />
+    <ClCompile Include="CLurkerRightMove.cpp" />
+    <ClCompile Include="CLurkerScript.cpp" />
+    <ClCompile Include="CLurkerTrace.cpp" />
+    <ClCompile Include="CMagic.cpp" />
+    <ClCompile Include="CMagic_ArrowScript.cpp" />
+    <ClCompile Include="CMagic_BombScript.cpp" />
+    <ClCompile Include="CMagic_FireScript.cpp" />
+    <ClCompile Include="CMagic_HookScript.cpp" />
+    <ClCompile Include="CMainLightScript.cpp" />
+    <ClCompile Include="CMoneyCountScript.cpp" />
+    <ClCompile Include="CMonsterDetectRangeScript.cpp" />
+    <ClCompile Include="CCursorScript.cpp" />
+    <ClCompile Include="CPlayerWeaponScript.cpp" />
+    <ClCompile Include="CLevelSaveLoadInScript.cpp" />
+    <ClCompile Include="CLoadingThread.cpp" />
+    <ClCompile Include="CLoadLevelThreadScript.cpp" />
+    <ClCompile Include="CMonsterScript.cpp" />
+    <ClCompile Include="CPlayerScript.cpp" />
+    <ClCompile Include="CPlyAttack.cpp" />
+    <ClCompile Include="CPlyDance.cpp" />
+    <ClCompile Include="CPlyDead.cpp" />
+    <ClCompile Include="CPlyDodge.cpp" />
+    <ClCompile Include="CPlyFall.cpp" />
+    <ClCompile Include="CPlyHit.cpp" />
+    <ClCompile Include="CPlyIdle.cpp" />
+    <ClCompile Include="CPlyLadder.cpp" />
+    <ClCompile Include="CPlyMagic_Arrow.cpp" />
+    <ClCompile Include="CPlyMagic_Bomb.cpp" />
+    <ClCompile Include="CPlyMagic_Fire.cpp" />
+    <ClCompile Include="CPlyMagic_Hook.cpp" />
+    <ClCompile Include="CPlyMagic_Hooking.cpp" />
+    <ClCompile Include="CPlyRun.cpp" />
+    <ClCompile Include="CPlyWalk.cpp" />
+    <ClCompile Include="CPlyWpAttack.cpp" />
+    <ClCompile Include="CPlyWpDance.cpp" />
+    <ClCompile Include="CPlyWpDead.cpp" />
+    <ClCompile Include="CPlyWpDodge.cpp" />
+    <ClCompile Include="CPlyWpFall.cpp" />
+    <ClCompile Include="CPlyWpHit.cpp" />
+    <ClCompile Include="CPlyWpIdle.cpp" />
+    <ClCompile Include="CPlyWpLadder.cpp" />
+    <ClCompile Include="CPlyWpMagic_Arrow.cpp" />
+    <ClCompile Include="CPlyWpMagic_Bomb.cpp" />
+    <ClCompile Include="CPlyWpMagic_Fire.cpp" />
+    <ClCompile Include="CPlyWpMagic_Hook.cpp" />
+    <ClCompile Include="CPlyWpMagic_Hooking.cpp" />
+    <ClCompile Include="CPlyWpRun.cpp" />
+    <ClCompile Include="CPlyWpWalk.cpp" />
+    <ClCompile Include="CPower.cpp" />
+    <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CSlashScript.cpp" />
+    <ClCompile Include="CSoundScript.cpp" />
+    <ClCompile Include="CSpawnDoorScript.cpp" />
+    <ClCompile Include="CSpawnMgr.cpp" />
+    <ClCompile Include="CSpeed.cpp" />
+    <ClCompile Include="CStartSceneUIScript.cpp" />
+    <ClCompile Include="CState.cpp" />
+    <ClCompile Include="CStateScript.cpp" />
+    <ClCompile Include="CTrace.cpp" />
+    <ClCompile Include="CTrapScript.cpp" />
+    <ClCompile Include="CUIMgr.cpp" />
+    <ClCompile Include="CWaterCameraScript.cpp" />
+    <ClCompile Include="CRoomScript.cpp" />
+    <ClCompile Include="CWaterScript.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="PlayerStates.h" />
+    <ClCompile Include="Script.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

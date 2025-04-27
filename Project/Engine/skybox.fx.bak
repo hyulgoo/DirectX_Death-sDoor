@@ -1,0 +1,69 @@
+#ifndef _SKYBOX
+#define _SKYBOX
+
+#include "value.fx"
+#include "struct.fx"
+#include "func.fx"
+
+// =======================
+// SkyBox Shader
+// mesh : Sphere
+// g_tex_0 : Output Texture
+
+// g_int_0 : SKY Box Type ( 0 : Sphere, 1 : Cube )
+// =======================
+
+struct VS_IN
+{
+    float3 vPos : POSITION;
+    float2 vUV : TEXCOORD;
+};
+
+struct VS_OUT
+{
+    float4 vPosition : SV_Position;
+    float2 vUV : TEXCOORD;
+    float3 vLocalPos : POSITION;
+};
+
+VS_OUT VS_SkyBox(VS_IN _in)
+{
+    VS_OUT output = (VS_OUT) 0.f;
+    
+    // View Space로 좌표들을 통일시킴
+    float4 vViewPos = mul(float4(_in.vPos, 0.f), g_matView);
+    // 카메라의 이동값은 반영해야 시야를 움직일 때 하늘이 움직여보이므로 투영행렬은 반영시킴
+    output.vPosition = mul(float4(vViewPos.xyz, 1.f), g_matProj);
+    // Rasterizer에서 좌표를 1로 압축하기 위해서 w로 나누는데 z값을 1로 강제로 고정하기 위해서
+    // 나누는 w값으로 z값을 고정하여 나눴을 때 1이 나오도록 함.
+    // RS에서는 LESS_EQUAL로 설정하여 1 아래만 투영이 아닌 1 이하를 투영하도록 설정을 변경함.
+    output.vPosition.z = output.vPosition.w;
+    output.vUV = _in.vUV;
+    
+    output.vLocalPos = _in.vPos;
+       
+    return output;
+}
+
+float4 PS_SkyBox(VS_OUT _in) : SV_Target
+{
+    float4 vOutColor = float4(1.f, 0.f, 1.f, 1.f);
+    
+    // SkyBox가 Sphere Mesh를 사용할 경우
+    if (g_int_0 == 0)
+    {
+        vOutColor = g_tex_0.Sample(g_sam_0, _in.vUV);
+    }
+    
+    else if (g_int_0 == 1)
+    {        
+        // Cube Mesh에 맞는 육면체 텍스트의 경우는 vUV값을 정확히 환산하여 전달하기 어렵기 때문에
+        // HSLS 내에 있는 함수를 활용하기 위해 방향벡터를 주고 로컬좌표 기준으로 픽셀의 위치는 
+        // 중심에서 픽셀 방향으로 가는 방향벡터이기 때문에 로컬Pos를 전달하여 방향벡터로 사용함.
+        vOutColor = g_cube_0.Sample(g_sam_0, _in.vLocalPos);
+    }
+    
+    return vOutColor;
+}
+
+#endif
